@@ -4,6 +4,8 @@ import { MatChipEditedEvent, MatChipInputEvent } from '@angular/material/chips';
 import { COMMA, ENTER } from '@angular/cdk/keycodes';
 import { ActivatedRoute } from '@angular/router';
 import { VideoService } from '../video.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { videoDto } from '../video-dto';
 
 @Component({
   selector: 'app-save-video-details',
@@ -23,13 +25,22 @@ export class SaveVideoDetailsComponent {
   selectedFilename: string = '';
 
   videoId: string;
+  fileSelected: boolean = false;
+  videoUrl!: string;
+  thumbnailUrl!: string;
 
   constructor(
     private activatedRoute: ActivatedRoute,
-    private videoService: VideoService
+    private videoService: VideoService,
+    private matSnackBar: MatSnackBar
   ) {
     this.videoId = this.activatedRoute.snapshot.params['videoId'];
-    console.log(this.videoId);
+
+    this.videoService.getVideo(this.videoId).subscribe((data) => {
+      this.videoUrl = data.videoUrl;
+      this.thumbnailUrl = data.thumbnailUrl;
+      console.log(this.videoUrl);
+    });
 
     this.saveVideoDetailsForm = new FormGroup({
       title: this.title,
@@ -82,6 +93,7 @@ export class SaveVideoDetailsComponent {
     if (!input.files?.length) return;
     this.selectedFile = input.files[0];
     this.selectedFilename = this.selectedFile.name;
+    this.fileSelected = true;
   }
 
   onUpload() {
@@ -89,6 +101,23 @@ export class SaveVideoDetailsComponent {
       .uploadThumbnail(this.selectedFile, this.videoId)
       .subscribe((data) => {
         console.log(data);
+        this.matSnackBar.open('Thumbnail Upload Successful', 'OK');
       });
+  }
+
+  saveVideo() {
+    const videoMetaData: videoDto = {
+      id: this.videoId,
+      title: this.saveVideoDetailsForm.get('title')?.value,
+      description: this.saveVideoDetailsForm.get('description')?.value,
+      tags: this.tags,
+      videoStatus: this.saveVideoDetailsForm.get('videoStatus')?.value,
+      videoUrl: this.videoUrl,
+      thumbnailUrl: this.thumbnailUrl,
+    };
+    console.log(videoMetaData);
+    this.videoService.saveVideo(videoMetaData).subscribe((data) => {
+      this.matSnackBar.open('Video Metadata Updated Successfully', 'OK');
+    });
   }
 }

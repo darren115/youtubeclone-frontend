@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { UploadVideoResponse } from './upload-video/UploadVideoResponse';
+import { videoDto } from './video-dto';
 
 @Injectable({
   providedIn: 'root',
@@ -32,6 +33,19 @@ export class VideoService {
       {
         responseType: 'text',
       }
+    );
+  }
+
+  getVideo(videoId: string): Observable<videoDto> {
+    return this.httpClient.get<videoDto>(
+      'http://localhost:8080/api/videos/' + videoId
+    );
+  }
+
+  saveVideo(videoMetaData: videoDto): Observable<videoDto> {
+    return this.httpClient.put<videoDto>(
+      'http://localhost:8080/api/videos',
+      videoMetaData
     );
   }
 }

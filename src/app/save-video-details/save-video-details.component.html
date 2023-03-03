@@ -14,8 +14,8 @@
       <mat-form-field appearance="fill">
         <mat-label>Video Status</mat-label>
         <mat-select [formControl]="videoStatus">
-          <mat-option value="public">PUBLIC</mat-option>
-          <mat-option value="private">PRIVATE</mat-option>
+          <mat-option value="PUBLIC">PUBLIC</mat-option>
+          <mat-option value="PRIVATE">PRIVATE</mat-option>
         </mat-select>
       </mat-form-field>
       <mat-form-field class="example-chip-list" appearance="fill">
@@ -55,23 +55,40 @@
             />
           </div>
           <br />
-          <div>
-            <p>Selected File: {{ selectedFilename }}</p>
+          <div *ngIf="fileSelected">
+            <div>
+              <p>Selected File: {{ selectedFilename }}</p>
+            </div>
+            <hr />
+            <div>
+              <button
+                mat-raised-button
+                color="primary"
+                type="submit"
+                (click)="onUpload()"
+              >
+                Upload
+              </button>
+            </div>
           </div>
-          <hr />
-          <div>
-            <button mat-raised-button color="primary" type="submit" (click)="onUpload()">
-              Upload
-            </button>
-          </div>
+
           <br />
         </label>
       </div>
       <div>
-        <button type="submit" mat-raised-button color="primary">Save</button>
+        <button
+          type="submit"
+          mat-raised-button
+          color="primary"
+          (click)="saveVideo()"
+        >
+          Save
+        </button>
       </div>
     </form>
   </div>
-  <div fxFlex="30%">Video Player</div>
+  <div fxFlex="30%">
+    <app-video-player [videoUrl]="videoUrl"></app-video-player>
+  </div>
   <div fxFlex="20%">Hi</div>
 </div>
