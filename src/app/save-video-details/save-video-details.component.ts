@@ -114,6 +114,9 @@ export class SaveVideoDetailsComponent {
       videoStatus: this.saveVideoDetailsForm.get('videoStatus')?.value,
       videoUrl: this.videoUrl,
       thumbnailUrl: this.thumbnailUrl,
+      viewCount: 0,
+      likeCount: 0,
+      dislikeCount: 0,
     };
     console.log(videoMetaData);
     this.videoService.saveVideo(videoMetaData).subscribe((data) => {

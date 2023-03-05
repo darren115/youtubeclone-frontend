@@ -54,4 +54,18 @@ export class VideoService {
       'http://localhost:8080/api/videos'
     );
   }
+
+  likeVideo(videoId: string): Observable<videoDto> {
+    return this.httpClient.post<videoDto>(
+      'http://localhost:8080/api/videos/' + videoId + '/like',
+      null
+    );
+  }
+
+  dislikeVideo(videoId: string): Observable<videoDto> {
+    return this.httpClient.post<videoDto>(
+      'http://localhost:8080/api/videos/' + videoId + '/dislike',
+      null
+    );
+  }
 }
