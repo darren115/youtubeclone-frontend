@@ -48,4 +48,10 @@ export class VideoService {
       videoMetaData
     );
   }
+
+  getAllVideos(): Observable<Array<videoDto>> {
+    return this.httpClient.get<Array<videoDto>>(
+      'http://localhost:8080/api/videos'
+    );
+  }
 }

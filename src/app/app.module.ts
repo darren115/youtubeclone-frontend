@@ -7,7 +7,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { UploadVideoComponent } from './upload-video/upload-video.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgxFileDropModule } from 'ngx-file-drop';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { MatButtonModule } from '@angular/material/button';
 import { HeaderComponent } from './header/header.component';
 import { MatToolbarModule } from '@angular/material/toolbar';
@@ -20,12 +20,24 @@ import { MatOptionModule } from '@angular/material/core';
 import { MatInputModule } from '@angular/material/input';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
-import {VgCoreModule} from '@videogular/ngx-videogular/core';
-import {VgControlsModule} from '@videogular/ngx-videogular/controls';
-import {VgOverlayPlayModule} from '@videogular/ngx-videogular/overlay-play';
-import {VgBufferingModule} from '@videogular/ngx-videogular/buffering';
+import { VgCoreModule } from '@videogular/ngx-videogular/core';
+import { VgControlsModule } from '@videogular/ngx-videogular/controls';
+import { VgOverlayPlayModule } from '@videogular/ngx-videogular/overlay-play';
+import { VgBufferingModule } from '@videogular/ngx-videogular/buffering';
 import { VideoPlayerComponent } from './video-player/video-player.component';
 import { AuthConfigModule } from './auth/auth-config.module';
+import { AuthInterceptor } from 'angular-auth-oidc-client';
+import { VideoDetailComponent } from './video-detail/video-detail.component';
+import { HomeComponent } from './home/home.component';
+import { HistoryComponent } from './history/history.component';
+import { SubscriptionsComponent } from './subscriptions/subscriptions.component';
+import { LikedVideosComponent } from './liked-videos/liked-videos.component';
+import { SidebarComponent } from './sidebar/sidebar.component';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatListModule } from '@angular/material/list';
+import { FeaturedComponent } from './featured/featured.component';
+import { VideoCardComponent } from './video-card/video-card.component';
+import { MatCardModule } from '@angular/material/card';
 
 @NgModule({
   declarations: [
@@ -34,6 +46,14 @@ import { AuthConfigModule } from './auth/auth-config.module';
     HeaderComponent,
     SaveVideoDetailsComponent,
     VideoPlayerComponent,
+    VideoDetailComponent,
+    HomeComponent,
+    HistoryComponent,
+    SubscriptionsComponent,
+    LikedVideosComponent,
+    SidebarComponent,
+    FeaturedComponent,
+    VideoCardComponent,
   ],
   imports: [
     BrowserModule,
@@ -53,13 +73,22 @@ import { AuthConfigModule } from './auth/auth-config.module';
     MatInputModule,
     MatChipsModule,
     VgCoreModule,
-        VgControlsModule,
-        VgOverlayPlayModule,
-        VgBufferingModule,
-        MatSnackBarModule,
-        AuthConfigModule,
+    VgControlsModule,
+    VgOverlayPlayModule,
+    VgBufferingModule,
+    MatSnackBarModule,
+    AuthConfigModule,
+    MatSidenavModule,
+    MatListModule,
+    MatCardModule,
   ],
-  providers: [],
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthInterceptor,
+      multi: true,
+    },
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
