@@ -48,10 +48,25 @@ export class VideoDetailComponent {
       this.userId = data.userId;
       this.parseDifference();
 
-      this.userService.getUserById(this.userId).subscribe((data) => (this.user = data));
+      this.userService.getUserById(this.userId).subscribe((data) => {
+        this.user = data;
+        console.log(this.user);
+      });
     });
+  }
 
+  parseSubscribers(): string{
+    const number =  this.user.subscribers;
 
+    if(number < 1000){
+       return '' + number;
+    }
+
+    if( number < 1000000){
+      return number/1000 + ' K';
+    }
+
+    return (number/1000000).toFixed(1) + ' M';
   }
 
   parseDifference() {
