@@ -41,7 +41,7 @@ export class VideoDetailComponent {
       this.dislikeCount = data.dislikeCount;
       this.viewCount = data.viewCount;
       this.uploadDate = data.uploadDate;
-      this.parseDifference()
+      this.parseDifference();
     });
   }
 
@@ -62,15 +62,14 @@ export class VideoDetailComponent {
       years = months / 12;
     }
 
-    console.log(hours, days, months, years);
     if (years > 0) {
       this.uploadDiff = Math.floor(years) + ' years ago';
-    } else if (months > 0) {
+    } else if (months >= 1) {
       this.uploadDiff = Math.floor(months) + ' months ago';
-    } else if (hours > 0) {
+    } else if (hours >= 1) {
       this.uploadDiff = Math.floor(hours) + ' hours ago';
     } else {
-      this.uploadDiff = Math.floor(this.uploadDate) + ' minutes ago';
+      this.uploadDiff = Math.floor(Math.abs(this.uploadDate)) + ' minutes ago';
     }
   }
 

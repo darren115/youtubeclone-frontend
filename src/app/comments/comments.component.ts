@@ -37,6 +37,9 @@ export class CommentsComponent implements OnInit {
     const commentDto = {
       commentText: comment,
       authorId: this.userService.getUserId(),
+      likes: 0,
+      dislikes: 0,
+      uploadDifference: 0,
     };
 
     this.commentsService
@@ -52,5 +55,36 @@ export class CommentsComponent implements OnInit {
     this.commentsService.getAllComments(this.videoId).subscribe((data) => {
       this.commentsDto = data;
     });
+  }
+
+  parseDifference(difference: number): string {
+    var uploadDiff;
+
+    var hours = Math.abs(+difference / 60);
+    var days = 0;
+    var months = 0;
+    var years = 0;
+    if (hours >= 24) {
+      days = hours / 24;
+    }
+    if (days >= 30) {
+      months = days / 30;
+    }
+
+    if (months >= 12) {
+      years = months / 12;
+    }
+
+    if (years > 0) {
+      uploadDiff = Math.floor(years) + ' years ago';
+    } else if (months >= 1) {
+      uploadDiff = Math.floor(months) + ' months ago';
+    } else if (hours >= 1) {
+      uploadDiff = Math.floor(hours) + ' hours ago';
+    } else {
+      uploadDiff = Math.floor(Math.abs(+difference)) + ' minutes ago';
+    }
+
+    return uploadDiff;
   }
 }
