@@ -117,6 +117,7 @@ export class SaveVideoDetailsComponent {
       viewCount: 0,
       likeCount: 0,
       dislikeCount: 0,
+      uploadDate: 0,
     };
     console.log(videoMetaData);
     this.videoService.saveVideo(videoMetaData).subscribe((data) => {
