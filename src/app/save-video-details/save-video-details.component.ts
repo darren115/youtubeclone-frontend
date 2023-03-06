@@ -6,6 +6,8 @@ import { ActivatedRoute } from '@angular/router';
 import { VideoService } from '../video.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { videoDto } from '../video-dto';
+import { OidcSecurityService } from 'angular-auth-oidc-client';
+import { UserService } from '../user.service';
 
 @Component({
   selector: 'app-save-video-details',
@@ -32,14 +34,15 @@ export class SaveVideoDetailsComponent {
   constructor(
     private activatedRoute: ActivatedRoute,
     private videoService: VideoService,
-    private matSnackBar: MatSnackBar
+    private matSnackBar: MatSnackBar,
+    private userService: UserService
   ) {
     this.videoId = this.activatedRoute.snapshot.params['videoId'];
 
     this.videoService.getVideo(this.videoId).subscribe((data) => {
       this.videoUrl = data.videoUrl;
       this.thumbnailUrl = data.thumbnailUrl;
-      console.log(this.videoUrl);
+      // console.log(this.videoUrl);
     });
 
     this.saveVideoDetailsForm = new FormGroup({
@@ -72,13 +75,13 @@ export class SaveVideoDetailsComponent {
   edit(tag: string, event: MatChipEditedEvent) {
     const value = event.value.trim();
 
-    // Remove fruit if it no longer has a name
+    // Remove if it no longer has a name
     if (!value) {
       this.remove(tag);
       return;
     }
 
-    // Edit existing fruit
+    // Edit existing f
     const index = this.tags.indexOf(tag);
     if (index >= 0) {
       this.tags[index] = value;
@@ -108,6 +111,7 @@ export class SaveVideoDetailsComponent {
   saveVideo() {
     const videoMetaData: videoDto = {
       id: this.videoId,
+      userId: this.userService.getUserId(),
       title: this.saveVideoDetailsForm.get('title')?.value,
       description: this.saveVideoDetailsForm.get('description')?.value,
       tags: this.tags,
@@ -119,7 +123,7 @@ export class SaveVideoDetailsComponent {
       dislikeCount: 0,
       uploadDate: 0,
     };
-    console.log(videoMetaData);
+     console.log(videoMetaData);
     this.videoService.saveVideo(videoMetaData).subscribe((data) => {
       this.matSnackBar.open('Video Metadata Updated Successfully', 'OK');
     });

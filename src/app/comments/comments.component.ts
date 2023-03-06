@@ -84,7 +84,6 @@ export class CommentsComponent implements OnInit {
     } else {
       uploadDiff = Math.floor(Math.abs(+difference)) + ' minutes ago';
     }
-
     return uploadDiff;
   }
 }

@@ -13,13 +13,20 @@ import { UserService } from '../user.service';
 export class HeaderComponent implements OnInit {
   isAuthenticated: boolean = false;
 
-  constructor(private oidcSecurityService: OidcSecurityService, private userService: UserService) {}
+  constructor(
+    private oidcSecurityService: OidcSecurityService,
+    private userService: UserService
+  ) {}
 
   ngOnInit() {
     this.oidcSecurityService.checkAuth().subscribe(({ isAuthenticated }) => {
       this.isAuthenticated = isAuthenticated;
       this.userService.registerUser();
     });
+  }
+
+  register() {
+    this.userService.registerUser();
   }
 
   login() {

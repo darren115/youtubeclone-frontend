@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { UserDTO } from './user-dto';
 
 @Injectable({
   providedIn: 'root',
@@ -30,6 +31,18 @@ export class UserService {
       .subscribe((data) => {
         this.userId = data;
       });
+  }
+
+  getUser(): Observable<UserDTO> {
+    return this.httpClient.get<UserDTO>(
+      'http://localhost:8080/api/user/' + this.getUserId()
+    );
+  }
+
+  getUserById(userId: string): Observable<UserDTO> {
+    return this.httpClient.get<UserDTO>(
+      'http://localhost:8080/api/user/' + userId
+    );
   }
 
   getUserId(): string {

@@ -9,7 +9,7 @@ import { AuthModule } from 'angular-auth-oidc-client';
         redirectUrl: 'http://localhost:4200/callback',
         // redirectUrl: window.location.origin,
         clientId: 'c1EBTADRIkxEzeLMMj0y9qR2AwlPnM2x',
-        scope: 'openid profile offline_access email',
+        scope: 'openid profile offline_access email read write',
         responseType: 'code',
         silentRenew: true,
         useRefreshToken: true,

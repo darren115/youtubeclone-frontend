@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { UserService } from '../user.service';
 
@@ -7,9 +7,12 @@ import { UserService } from '../user.service';
   templateUrl: './callback.component.html',
   styleUrls: ['./callback.component.css'],
 })
-export class CallbackComponent {
+export class CallbackComponent implements OnInit {
   constructor(private userService: UserService, private router: Router) {
     //this.userService.registerUser();
+  }
+
+  ngOnInit(): void {
     this.router.navigateByUrl('');
   }
 }

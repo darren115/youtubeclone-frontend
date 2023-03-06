@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { UserDTO } from '../user-dto';
 import { UserService } from '../user.service';
 import { VideoService } from '../video.service';
 
@@ -10,6 +11,7 @@ import { VideoService } from '../video.service';
 })
 export class VideoDetailComponent {
   videoId!: string;
+  userId!: string;
   videoTitle!: string;
   videoDescription!: string;
   tags: Array<string> = [];
@@ -23,6 +25,8 @@ export class VideoDetailComponent {
 
   showUnSubscribeButton: boolean = false;
   showSubscribeButton: boolean = true;
+
+  user!: UserDTO;
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -41,8 +45,13 @@ export class VideoDetailComponent {
       this.dislikeCount = data.dislikeCount;
       this.viewCount = data.viewCount;
       this.uploadDate = data.uploadDate;
+      this.userId = data.userId;
       this.parseDifference();
+
+      this.userService.getUserById(this.userId).subscribe((data) => (this.user = data));
     });
+
+
   }
 
   parseDifference() {

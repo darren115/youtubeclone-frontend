@@ -27,16 +27,16 @@
   </div>
 </form>
 <mat-divider></mat-divider>
-<div class="view-comments" *ngFor="let comment of commentsDto">
+<mat-card class="view-comments" *ngFor="let comment of commentsDto">
   <div fxLayout="row">
-    <div fxFlex="50%">
+    <div fxFlex="75%">
       <mat-card-header>
-        <div matCardAvatar class="example-header-image"></div>
-        <a matCardTitle class="comment-author" routerLink="">User</a>
-        <p matCardSubtitle>{{ parseDifference(comment.uploadDifference) }}</p>
+        <div mat-card-avatar class="example-header-image"></div>
+        <a mat-card-title class="comment-author" routerLink="">User</a>
+        <p mat-card-subtitle>{{ parseDifference(comment.uploadDifference) }}</p>
       </mat-card-header>
     </div>
-    <div fxFlex="50%" class="delete-comment" fxFlexAlign="end">
+    <div fxFlex="25%" class="delete-comment" fxFlexAlign="end">
       <button mat-icon-button>
         <mat-icon>delete</mat-icon>
       </button>
@@ -45,4 +45,4 @@
   <div>
     {{ comment.commentText }}
   </div>
-</div>
+</mat-card>
