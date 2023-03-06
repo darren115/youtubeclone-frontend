@@ -57,8 +57,7 @@
       <div>{{ videoDescription }}</div>
       <mat-divider></mat-divider>
       <mat-chip-listbox>
-        <mat-chip-option>Spring Boot</mat-chip-option>
-        <mat-chip-option>Angular</mat-chip-option>
+        <mat-chip *ngFor="let tag of tags">{{ tag }}</mat-chip>
       </mat-chip-listbox>
       <mat-divider></mat-divider>
       <app-comments *ngIf="videoAvailable" [videoId]="videoId"></app-comments>
